@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const requireLogin  = require('../middleware/requireLogin')
+const authorization = require('../middleware/authorization')
 const Post =  mongoose.model("Post")
 
 
-router.get('/allpost',requireLogin,(req,res)=>{
+router.get('/allpost',authorization,(req,res)=>{
     Post.find()
     .populate("postedBy","_id name")
     .populate("comments.postedBy","_id name")
@@ -18,7 +18,7 @@ router.get('/allpost',requireLogin,(req,res)=>{
     
 })
 
-router.get('/getsubpost',requireLogin,(req,res)=>{
+router.get('/getsubpost',authorization,(req,res)=>{
 
     // if postedBy in following
     Post.find({postedBy:{$in:req.user.following}})
@@ -33,7 +33,7 @@ router.get('/getsubpost',requireLogin,(req,res)=>{
     })
 })
 
-router.post('/createpost',requireLogin,(req,res)=>{
+router.post('/createpost',authorization,(req,res)=>{
     const {title,body,pic} = req.body 
     if(!title || !body || !pic){
       return  res.status(422).json({error:"Plase add all the fields"})
@@ -53,7 +53,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
     })
 })
 
-router.get('/mypost',requireLogin,(req,res)=>{
+router.get('/mypost',authorization,(req,res)=>{
     Post.find({postedBy:req.user._id})
     .populate("PostedBy","_id name")
     .then(mypost=>{
@@ -64,7 +64,7 @@ router.get('/mypost',requireLogin,(req,res)=>{
     })
 })
 
-router.put('/like',requireLogin,(req,res)=>{
+router.put('/like',authorization,(req,res)=>{
     Post.findByIdAndUpdate(req.body.postId,{
         $push:{likes:req.user._id}
     },{
@@ -77,7 +77,7 @@ router.put('/like',requireLogin,(req,res)=>{
         }
     })
 })
-router.put('/unlike',requireLogin,(req,res)=>{
+router.put('/unlike',authorization,(req,res)=>{
     Post.findByIdAndUpdate(req.body.postId,{
         $pull:{likes:req.user._id}
     },{
@@ -92,7 +92,7 @@ router.put('/unlike',requireLogin,(req,res)=>{
 })
 
 
-router.put('/comment',requireLogin,(req,res)=>{
+router.put('/comment',authorization,(req,res)=>{
     const comment = {
         text:req.body.text,
         postedBy:req.user._id
@@ -113,7 +113,7 @@ router.put('/comment',requireLogin,(req,res)=>{
     })
 })
 
-router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
+router.delete('/deletepost/:postId',authorization,(req,res)=>{
     Post.findOne({_id:req.params.postId})
     .populate("postedBy","_id")
     .exec((err,post)=>{
