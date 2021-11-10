@@ -1,0 +1,10 @@
+.followers__c {
+  margin: 0.1em auto;
+}
+.h_c__r__r {
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
