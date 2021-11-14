@@ -1,0 +1,51 @@
+.pr__pic_ri {
+  width: 60%;
+}
+.pr_pi_rt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1em 0;
+}
+.pr__pic_rt_set > img {
+  width: 30px;
+}
+.pr__pi_edpr {
+  border: 1px solid #cccc;
+  padding: 10px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.pr_p_name {
+  font-size: 26px;
+  font-weight: 300;
+}
+.comm__text_bold {
+  font-weight: 500;
+}
+/* profile bottom */
+.pr__bt {
+  border-top: 1px solid #cccc;
+}
+
+.pr__alltabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 35%;
+  margin: auto;
+}
+.pr__tabs {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  cursor: pointer;
+}
+.pr__tabs > p{
+  margin: 10px 5px;
+}
+.all_p_ac {
+  width: 13px;
+}

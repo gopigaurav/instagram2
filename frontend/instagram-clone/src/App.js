@@ -6,6 +6,10 @@ import Navbar from "./components/Navbar/Navbar";
 import Signin from "./Pages/Signin/Signin";
 import Signup from "./Pages/Signup/Signup";
 import Profile from "./Pages/Profile/Profile";
+import Loader from "./components/Loader/Loader";
+import { useSelector} from "react-redux";
+import InstaSlider from "./components/Popupslider/Popupslider"
+import Modal from "./components/Modal/Modal"
 /* <Route
   path='/dashboard'
   render={(props) => (
@@ -18,16 +22,24 @@ import Profile from "./Pages/Profile/Profile";
 />
  */
 function App() {
+  const showLoading = useSelector((state) => state.userAction.showLoading);
+  const openInstaStories = useSelector((state) => state.userAction.openInstaStories);
   return (
     <div className="App">
       <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/profile/:id" element={<Profile />}></Route>
-            <Route path="/signin" element={<Signin/>}></Route>
-            <Route path="/signup" element={<Signup/>}></Route>
-            <Route path="/" element={<Home/>}></Route>
-          </Routes>
+      {openInstaStories && (
+        <Modal actionType={"OPEN_INSTASTORIES"}>
+          <InstaSlider/>
+        </Modal>
+      )}
+        <Navbar />
+        {showLoading && <Loader />}
+        <Routes>
+          <Route path="/profile/:id" element={<Profile />}></Route>
+          <Route path="/signin" element={<Signin />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/" element={<Home />}></Route>
+        </Routes>
       </Router>
     </div>
   );
