@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
-import "./MyPosts.css"
+import "./OtherProPost.css"
 export default function Photos({myPosts}) {
   const photos = [
     {

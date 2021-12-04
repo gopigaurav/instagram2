@@ -5,6 +5,8 @@ import Home from "./Pages/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Signin from "./Pages/Signin/Signin";
 import Signup from "./Pages/Signup/Signup";
+import CreatePost from "./Pages/CreatePost/CreatePost";
+import UserProfile from "./Pages/UserProfile/UserProfile";
 import Profile from "./Pages/Profile/Profile";
 import Loader from "./components/Loader/Loader";
 import { useSelector} from "react-redux";
@@ -35,9 +37,11 @@ function App() {
         <Navbar />
         {showLoading && <Loader />}
         <Routes>
-          <Route path="/profile/:id" element={<Profile />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
           <Route path="/signin" element={<Signin />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/create" element={<CreatePost />}></Route>
+          <Route path="/profile/:userid" element={<UserProfile />}></Route>
           <Route path="/" element={<Home />}></Route>
         </Routes>
       </Router>

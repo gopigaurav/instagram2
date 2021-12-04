@@ -1,0 +1,16 @@
+.actions__container {
+  width: 30vw;
+  background-color: white;
+  border-radius: 5%;
+  overflow: hidden;
+}
+
+.actions__acts {
+  justify-content: center;
+  margin: 1em;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}

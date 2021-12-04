@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -6,10 +6,15 @@ import styled from "styled-components";
 import "./Home.css";
 import Posts from "../Posts/Posts.js";
 import Followers from "../Followers/Followers";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllPosts } from "../../app/actions/post";
+import Modal from "../../components/Modal/Modal"
+import Actions from "../../components/Actions/Actions"
 function Home() {
   //const slider = $(".slider-item");
   //Implementing navigation of slides using mouse scroll
   const slider = useRef();
+  const dispatch = useDispatch();
   function handleScroll(e) {
     if (e.deltaX < 0) {
       slider.current.slickPrev();
@@ -17,6 +22,10 @@ function Home() {
       slider.current.slickNext();
     }
   }
+  const openActions = useSelector((state) => state.userAction.openActions);
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, []);
   const settings = {
     //dots: true,
     infinite: false,
@@ -105,53 +114,63 @@ function Home() {
     },
   ];
   return (
-    <div className="home__c">
-      <div className="home__c_c">
-        <div onWheel={handleScroll} className="home__slider">
-          <Carousel {...settings} ref={slider}>
-            {data.map((data) => (
-              <Wrap>
-                <a>
-                  <img src={data.pic} alt="" />
-                </a>
-                <div className="home__slider_text">
-                  <p className="home_slider_names">{data.name}</p>
-                </div>
-              </Wrap>
-            ))}
-          </Carousel>
+    <>
+    {openActions && (
+        <Modal actionType={"OPEN_ACTIONS"}>
+          <Actions/>
+        </Modal>
+      )}
+      <div className="home__c">
+        <div className="home__c_c">
+          <div onWheel={handleScroll} className="home__slider">
+            <Carousel {...settings} ref={slider}>
+              {data.map((data, ind) => (
+                <Wrap
+                  key={ind}
+                  onClick={() =>
+                    dispatch({ type: "OPEN_INSTASTORIES", payload: true })
+                  }
+                >
+                  <a>
+                    <img src={data.pic} alt="" />
+                  </a>
+                  <div className="home__slider_text">
+                    <p className="home_slider_names">{data.name}</p>
+                  </div>
+                </Wrap>
+              ))}
+            </Carousel>
+          </div>
+          <div>
+            <Posts />
+          </div>
         </div>
-        <div>
-          <Posts />
-          <Posts />
-          <Posts />
+        <div className="home__c_r">
+          <div className="h_c__r">
+            <div className="hc_r">
+              <div className="home_img_pic">
+                <img src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" />
+              </div>
+              <div>
+                <p className="pro_info frst_text">gopi gaurav</p>
+                <p className="pro_info scd_text">gopi</p>
+              </div>
+            </div>
+            <p className="pro_info_switch_acc">Switch</p>
+          </div>
+          <div className="rt_btm">
+            <div className="rt_btm_top">
+              <p>Suggestions For You</p>
+              <p>See All</p>
+            </div>
+            <Followers />
+            <Followers />
+            <Followers />
+            <Followers />
+          </div>
         </div>
       </div>
-      <div className="home__c_r">
-        <div className="h_c__r">
-          <div className="hc_r">
-            <div className="home_img_pic">
-              <img src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" />
-            </div>
-            <div>
-              <p className="pro_info frst_text">gopi gaurav</p>
-              <p className="pro_info scd_text">gopi</p>
-            </div>
-          </div>
-          <p className="pro_info_switch_acc">Switch</p>
-        </div>
-        <div className="rt_btm">
-          <div className="rt_btm_top">
-            <p>Suggestions For You</p>
-            <p>See All</p>
-          </div>
-          <Followers />
-          <Followers />
-          <Followers />
-          <Followers />
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
 const Carousel = styled(Slider)`

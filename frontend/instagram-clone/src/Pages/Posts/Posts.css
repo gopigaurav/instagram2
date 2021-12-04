@@ -18,7 +18,8 @@
 .adm__name {
   margin: 0 15px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
+  opacity: 0.9;
 }
 .posts_main_pt {
   width: 100%;
@@ -43,10 +44,13 @@
   padding: 0.8em 0;
 }
 .psts__actns_l {
-  width: 23%;
+}
+.psts__actns_lac {
+  margin: 0 9px 0 0;
+  cursor: pointer;
 }
 .psts__actns_lac > img {
-  width: 25px;
+  width: 20px;
 }
 .psts__actns_lks {
   width: 95%;
@@ -65,7 +69,8 @@
 }
 .pts__atn_des {
   font-weight: 600;
-  opacity: 0.8;
+  font-size: 14px;
+  padding-right: 10px;
 }
 .pt_des {
   line-height: 20px;
@@ -88,4 +93,10 @@
   padding: 10px 0;
   outline: none;
   border: none;
+}
+.pt_view_com{
+  width: 95%;
+  font-size: 13px;
+  opacity: 0.5;
+  margin: 0.5em auto;
 }

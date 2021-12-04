@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
-import { Pagination, Scrollbar, A11y } from 'swiper';
+import { Pagination, Scrollbar, A11y } from "swiper";
 import "swiper/swiper.scss";
 //import "swiper/css/navigation.scss";
 import "swiper/swiper-bundle.min.css";
@@ -21,18 +21,29 @@ export default function App() {
   const [swiper, setSwiper] = useState(null);
   return (
     <>
-      <Swiper navigation={true} spaceBetween={100} className="mySwiper" 
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
-      onSwiper={setSwiper}
-      onSlideChange={(e) => console.log(e)}
-      onReachEnd={() => {/*...*/}}
-      allowSlidePrev={true}
+      <Swiper
+        navigation={true}
+        spaceBetween={100}
+        className="mySwiper"
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        onSwiper={setSwiper}
+        onSlideChange={(e) => console.log(e)}
+        onReachEnd={() => {
+          /*...*/
+        }}
+        allowSlidePrev={true}
       >
         <SwiperSlide>
           <InstaStories />
         </SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>
+          {" "}
+          <InstaStories />
+        </SwiperSlide>
+        <SwiperSlide>
+          {" "}
+          <InstaStories />
+        </SwiperSlide>
       </Swiper>
     </>
   );

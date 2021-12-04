@@ -1,12 +1,48 @@
 const initialstate = {
-  };
-  
-  const PostReducer = (state = initialstate, action) => {
-    switch (action.type) {
-      default:
-        return state;
+  allPosts: [],
+  myPosts: [],
+  userProfileInfo: {},
+};
+
+const PostReducer = (state = initialstate, action) => {
+  switch (action.type) {
+    case "FETCHED_ALL_POSTS":
+      return {
+        ...state,
+        allPosts: action.payload,
+      };
+    case "FETCHED_MY_POSTS":
+      return {
+        ...state,
+        myPosts: action.payload,
+      };
+    case "USER__PROFILE":
+      return {
+        ...state,
+        userProfileInfo: action.payload,
+      };
+    case "UPDATE_ACTIONS": {
+      const newData = state.allPosts.map((item) => {
+        if (item._id == action.payload._id) return action.payload;
+        else return item;
+      });
+      return {
+        ...state,
+        allPosts: newData,
+      };
     }
-  };
-  
-  export default PostReducer;
-  
+    case "UPDATE_ACTION_DELETE": {
+      const newData = state.allPosts.filter((item) => {
+        return item._id !== action.payload._id;
+      });
+      return {
+        ...state,
+        allPosts: newData,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+export default PostReducer;

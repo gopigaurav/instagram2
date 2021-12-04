@@ -69,6 +69,7 @@
 .pro_info_switch_acc {
   color: blue;
   font-weight: 600;
+  cursor: pointer;
 }
 
 /* right bottom */

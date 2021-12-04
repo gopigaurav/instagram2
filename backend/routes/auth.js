@@ -13,7 +13,6 @@ const {SENDGRID_API,EMAIL} = require('../config/keys')*/
 
 router.post("/signup", (req, res) => {
   const { name, email, password, pic } = req.body;
-  console.log(req.body);
   if (!email || !password || !name) {
     return res.status(422).json({ error: "please add all the fields" });
   }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import SettingsIcon from "../../assets/images/icons8-settings.svg";
 import ProfilIcon from "../../assets/images/icons8-user-location-16.png";
 import GridIcon from "../../assets/images/icons8-grid-32.png";
@@ -8,27 +7,20 @@ import MyPosts from "./MyPosts/MyPosts"
 import MySaved from "./MySaved/MySaved"
 import MyTaged from "./MyTaged/Mytaged"
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getMyPosts } from "../../app/actions/post";
 import "./Profile.css";
 const Profile = () => {
+  const dispatch = useDispatch()
+  const myPosts = useSelector(state => state.postAction.myPosts)
   const { id } = useParams();
-  useEffect(() => {
-  console.log(id);
-  }, []);
+  const user = JSON.parse(localStorage.getItem("user"));
   const [tabs, setTabs] = useState("posts")
-  //const dispatch = useDispatch()
   const [mypics, setPics] = useState([]);
   const state = [];
   const [image, setImage] = useState("");
   useEffect(() => {
-    /*fetch('/mypost',{
-           headers:{
-               "Authorization":"Bearer "+localStorage.getItem("jwt")
-           }
-       }).then(res=>res.json())
-       .then(result=>{
-           console.log(result)
-           setPics(result.mypost)
-       })*/
+    dispatch(getMyPosts())
   }, []);
   useEffect(() => {
     if (image) {
@@ -46,7 +38,7 @@ const Profile = () => {
             method: "put",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("jwt"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
             body: JSON.stringify({
               pic: data.url,
@@ -95,12 +87,12 @@ const Profile = () => {
                 borderRadius: "80px",
                 objectFit: "cover",
               }}
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=688&q=80"
+              src={user.pic}
             />
           </div>
           <div className="pr__pic_ri">
             <div className="pr_pi_rt">
-              <p className="pr_p_name">gopi gaurav</p>
+              <p className="pr_p_name">{user.name}</p>
               <div className="pr__pi_edpr">Edit Profile</div>
               <div className="pr__pic_rt_set">
                 <img src={SettingsIcon}></img>
@@ -113,45 +105,18 @@ const Profile = () => {
               }}
             >
               <p className="">
-                <span className="comm__text_bold">0</span> posts
+                <span className="comm__text_bold">{myPosts.length}</span> posts
               </p>
               <p className="">
-                <span className="comm__text_bold">0</span> followers
+                <span className="comm__text_bold">{user.followers.length}</span> followers
               </p>
               <p className="">
-                <span className="comm__text_bold">0</span> following
+                <span className="comm__text_bold">{user.following.length}</span> following
               </p>
             </div>
           </div>
         </div>
-
-        {/*<div className="file-field input-field" style={{ margin: "10px" }}>
-          <div className="btn #64b5f6 blue darken-1">
-            <span>Update pic</span>
-            <input
-              type="file"
-              onChange={(e) => updatePhoto(e.target.files[0])}
-            />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" />
-          </div>
-        </div>*/}
       </div>
-      {/*
-      <div className="gallery">
-        {mypics.map((item) => {
-          return (
-            <img 
-              key={item._id}
-              className="item"
-              src={item.photo}
-              alt={item.title}
-            />
-          );
-        })}
-      </div>
-      */}
       <div className="pr__bt">
         <div className="pr__alltabs">
           <div className="pr__tabs" onClick={() => setTabs("posts")}>
@@ -175,7 +140,7 @@ const Profile = () => {
         </div>
       </div>
       <div>
-        {tabs === "posts" && <MyPosts />}
+        {tabs === "posts" && <MyPosts myPosts={myPosts} />}
         {tabs === "saved" && <MySaved />}
         {tabs === "taged" && <MyTaged />}
       </div>
