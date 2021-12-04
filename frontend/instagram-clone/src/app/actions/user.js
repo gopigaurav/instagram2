@@ -26,7 +26,6 @@ export const signIn = (data, history) => async (dispatch) => {
       console.log(res.data);
       localStorage.setItem("token", JSON.stringify(res.data.token));
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      dispatch(getAllPosts())
       history("/");
     }
   } catch (err) {

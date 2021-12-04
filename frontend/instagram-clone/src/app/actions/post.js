@@ -144,9 +144,10 @@ export const getUserProfile = (id) => async (dispatch) => {
     alert(err);
   }
 };
-export const followUser = (userid) => async (dispatch) => {
+export const followUsers = (userid) => async (dispatch) => {
+  console.log(userid, token)
   try {
-    const res = await axios.get(
+    const res = await axios.put(
       "/follow",
       JSON.stringify({
         followId: userid,
@@ -159,7 +160,9 @@ export const followUser = (userid) => async (dispatch) => {
       }
     );
     if (res.status === 200) {
-      dispatch({ type: "USER__PROFILE", payload: res.data });
+      //dispatch({ type: "USER__PROFILE", payload: res.data });
+      //console.log(res.data)
+      localStorage.setItem("user", JSON.stringify(res.data));
     }
   } catch (err) {
     alert(err);
@@ -181,19 +184,29 @@ export const followUser = (userid) => async (dispatch) => {
       setShowFollow(false);
     });*/
 };
-const unfollowUser = () => (dispatch) => {
-  /*fetch("/unfollow", {
-    method: "put",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + localStorage.getItem("jwt"),
-    },
-    body: JSON.stringify({
-      unfollowId: userid,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
+export const unFollowUsers = (userid) => async (dispatch) => {
+  try {
+    const res = await axios.put(
+      "/unfollow",
+      JSON.stringify({
+        unfollowId: userid,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    if (res.status === 200) {
+      //dispatch({ type: "USER__PROFILE", payload: res.data });
+      console.log(res.data)
+      localStorage.setItem("user", JSON.stringify(res.data));
+    }
+  } catch (err) {
+    alert(err);
+  }
+  /*
       dispatch({
         type: "UPDATE",
         payload: { following: data.following, followers: data.followers },

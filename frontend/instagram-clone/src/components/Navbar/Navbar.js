@@ -3,7 +3,6 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 function Navbar() {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
   const [token, setToken] = useState(user ? true : false);
   useEffect(() => {
     console.log("run 1");
@@ -58,7 +57,7 @@ function Navbar() {
             className="nav_icons avatar"
             onClick={() => (window.location.href = `/profile/${user?._id}`)}
           >
-            <img src={user.pic}></img>
+            <img src={user?.pic}></img>
           </div>
           {token ? (
             <div

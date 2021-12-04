@@ -47,7 +47,7 @@ function Posts() {
                 <Link
                   to={
                     post.postedBy._id !== user._id
-                      ? "/user-profile/" + post.postedBy._id
+                      ? "/profile/" + post.postedBy._id
                       : "/profile"
                   }
                 >
